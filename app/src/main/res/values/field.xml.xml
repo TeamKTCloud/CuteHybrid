@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerArray">
+        <item> Select Provider  </item>
+        <item> Amazon Web Service </item>
+        <item> KT </item>
+        <item> Microsoft Azure </item>
+    </string-array>
+</resources>
