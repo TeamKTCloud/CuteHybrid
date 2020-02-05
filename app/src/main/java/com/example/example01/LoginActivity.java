@@ -91,11 +91,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onClick(View view) {
-        if(view == buttonSignin) {
+    public void onClick(View v) {
+        if(v == buttonSignin) {
             userLogin();
         }
-        if(view == textviewSingin) {
+        if(v == textviewSingin) {
             finish();
             startActivity(new Intent(this, JoinActivity.class));
         }

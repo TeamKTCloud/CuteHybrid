@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import java.lang.String;
 
 public class JoinActivity extends AppCompatActivity implements View.OnClickListener {
@@ -98,13 +97,13 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
 
     //button click event
     @Override
-    public void onClick(View view) {
-        if(view == buttonSignup) {
+    public void onClick(View v) {
+        if(v == buttonSignup) {
             //TODO
             registerUser();
         }
 
-        if(view == textviewSingin) {
+        if(v == textviewSingin) {
             //TODO
             startActivity(new Intent(this, LoginActivity.class)); //추가해 줄 로그인 액티비티
         }

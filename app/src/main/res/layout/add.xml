@@ -25,7 +25,6 @@
             android:layout_gravity="center"
             android:textColor="@android:color/white"/>
     </androidx.appcompat.widget.Toolbar>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,71 +68,13 @@
             android:textSize="15sp"
             android:textStyle="bold"
             android:theme="@style/AppTheme" />
-    </LinearLayout>  >
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="150dp"
-        android:background="@color/line_color"/>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/add_apikey"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="5dp"
-            android:textSize="15sp"
-            android:inputType="text"
-            android:background="@null"
-            android:imeOptions="actionNext"
-            android:hint="API_KEY"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="3dp"
-        android:background="@color/line_color"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/add_secretkey"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:padding="5dp"
-            android:textSize="15sp"
-            android:inputType="text"
-            android:imeOptions="actionDone"
-            android:background="@null"
-            android:hint="SECRET_KEY"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="3dp"
-        android:background="@color/line_color"/>
+    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <Button
-            android:id="@+id/add_apply"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/orange"
-            android:padding="5dp"
-            android:text="ADD"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:theme="@style/AppTheme" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
     </LinearLayout>
 
 </LinearLayout>
