@@ -27,7 +27,7 @@
             android:inputType="text"
             android:background="@null"
             android:imeOptions="actionNext"
-            android:hint="aws_access_key_id"/>
+            android:hint="ACCESS_KEY"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -48,7 +48,7 @@
             android:inputType="text"
             android:background="@null"
             android:imeOptions="actionNext"
-            android:hint="aws_secret_access_key"/>
+            android:hint="SECRET_KEY"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -69,7 +69,7 @@
             android:inputType="text"
             android:imeOptions="actionDone"
             android:background="@null"
-            android:hint="region"/>
+            android:hint="REGION"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -88,9 +88,9 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"
+            android:textColor="@color/blue"
             android:padding="5dp"
-            android:text="ADD"
+            android:text="Add Cloud"
             android:textSize="15sp"
             android:textStyle="bold"
             android:theme="@style/AppTheme" />

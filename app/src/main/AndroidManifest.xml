@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".DashActivity">
+            android:name=".JoinActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".JoinActivity">
+            android:name=".DashActivity">
         </activity>
         <activity
             android:name=".LoginActivity">
@@ -33,6 +33,9 @@
         </activity>
         <activity
             android:name=".KT_key_FragmentActivity">
+        </activity>
+        <activity
+            android:name=".AWS_key_FragmentActivity">
         </activity>
     </application>
 </manifest>

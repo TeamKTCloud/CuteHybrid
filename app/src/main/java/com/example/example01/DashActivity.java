@@ -46,7 +46,7 @@ public class DashActivity extends AppCompatActivity implements View.OnClickListe
         //유저가 있다면, null이 아니면 계속 진행
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        textViewUserEmail.setText(user.getEmail() + " 로그인");
+        textViewUserEmail.setText(user.getEmail() + " 로그인 성공");
         textViewUserUID.setText("UID : "+user.getUid());
 
 

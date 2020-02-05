@@ -33,41 +33,38 @@
         <Button
             android:id="@+id/KT"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="98dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:padding="5dp"
             android:text="KT"
-            android:textColor="@color/orange"
+            android:textColor="@color/colorAccent"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:theme="@style/AppTheme" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/AWS"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="98dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:padding="5dp"
             android:text="AWS"
-            android:textColor="@color/orange"
+            android:textColor="@color/colorAccent"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:theme="@style/AppTheme" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/Azure"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="98dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:padding="5dp"
             android:text="Azure"
-            android:textColor="@color/orange"
+            android:textColor="@color/colorAccent"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:theme="@style/AppTheme" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout

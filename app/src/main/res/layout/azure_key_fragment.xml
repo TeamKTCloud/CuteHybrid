@@ -19,7 +19,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/add_ktapikey"
+            android:id="@+id/add_azuretenantid"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:padding="5dp"
@@ -27,7 +27,28 @@
             android:inputType="text"
             android:background="@null"
             android:imeOptions="actionNext"
-            android:hint="API_KEY"/>
+            android:hint="TENANT_ID"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/add_azureclient"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:inputType="text"
+            android:background="@null"
+            android:imeOptions="actionNext"
+            android:hint="CLIENT'"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -40,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:id="@+id/add_ktsecretkey"
+            android:id="@+id/add_azurekey"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:padding="5dp"
@@ -48,7 +69,22 @@
             android:inputType="text"
             android:imeOptions="actionDone"
             android:background="@null"
-            android:hint="SECRET_KEY"/>
+            android:hint="KEY"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/add_azuresubscription_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:background="@null"
+            android:hint="SUBSCRIPTION_ID"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -63,7 +99,7 @@
         android:layout_marginTop="10dp">
 
         <Button
-            android:id="@+id/kt_add_apply"
+            android:id="@+id/aws_add_apply"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
