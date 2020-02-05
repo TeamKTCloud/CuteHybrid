@@ -33,7 +33,7 @@
         <Button
             android:id="@+id/KT"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="70dp"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:padding="5dp"
@@ -45,7 +45,7 @@
         <Button
             android:id="@+id/AWS"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="70dp"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:padding="5dp"
@@ -57,7 +57,7 @@
         <Button
             android:id="@+id/Azure"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="70dp"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:padding="5dp"
