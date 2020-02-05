@@ -19,6 +19,34 @@
         android:layout_gravity="center_horizontal"
         />
 
+    <TextView
+        android:id="@+id/textviewUserEmail"
+        android:text=""
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textviewUserUID"
+        android:text=""
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/buttonLogout"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:text="로그아웃"
+        android:textColor="@color/blue"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:theme="@style/AppTheme" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

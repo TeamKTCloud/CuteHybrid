@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import java.lang.String;
 
 public class JoinActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +32,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     //define firebase object
     FirebaseAuth firebaseAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         if(firebaseAuth.getCurrentUser() != null){
             //이미 로그인 되었다면 이 액티비티를 종료함
             finish();
-            //그리고 profile 액티비티를 연다.
+            //그리고 Dash 액티비티를 연다.
             startActivity(new Intent(getApplicationContext(), DashActivity.class)); //추가해 줄 ProfileActivity
         }
         //initializing views
@@ -91,7 +94,6 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                         progressDialog.dismiss();
                     }
                 });
-
     }
 
     //button click event

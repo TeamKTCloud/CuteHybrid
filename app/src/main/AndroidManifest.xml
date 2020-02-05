@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".AddActivity">
+            android:name=".JoinActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,6 +27,9 @@
         </activity>
         <activity
             android:name=".LoginActivity">
+        </activity>
+        <activity
+            android:name=".AddActivity">
         </activity>
     </application>
 </manifest>
