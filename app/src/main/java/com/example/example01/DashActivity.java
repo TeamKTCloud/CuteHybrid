@@ -1,12 +1,12 @@
 package com.example.example01;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +23,9 @@ public class DashActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewUserUID;
     private Button buttonLogout;
     private Button main_add;
+    private Button vm;
+    private Button lb;
+    private Button volume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,11 @@ public class DashActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.dashboard);
 
         main_add = (Button) findViewById(R.id.main_add);
-        textViewUserEmail = (TextView) findViewById(R.id.textviewUserEmail);
-        textViewUserUID = (TextView) findViewById(R.id.textviewUserUID);
+//        textViewUserEmail = (TextView) findViewById(R.id.textviewUserEmail);
+//        textViewUserUID = (TextView) findViewById(R.id.textviewUserUID);
+        vm = (Button) findViewById(R.id.vm);
+        lb = (Button) findViewById(R.id.lb);
+        volume = (Button) findViewById(R.id.volume);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
         //initializing firebase authentication object
@@ -46,12 +52,15 @@ public class DashActivity extends AppCompatActivity implements View.OnClickListe
         //유저가 있다면, null이 아니면 계속 진행
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        textViewUserEmail.setText(user.getEmail() + " 로그인 성공");
-        textViewUserUID.setText("UID : "+user.getUid());
+//        textViewUserEmail.setText(user.getEmail() + " 로그인 성공");
+//        textViewUserUID.setText("UID : "+user.getUid());
 
 
         buttonLogout.setOnClickListener(this);
         main_add.setOnClickListener(this);
+        vm.setOnClickListener(this);
+        lb.setOnClickListener(this);
+        volume.setOnClickListener(this);
     }
 
     @Override
@@ -64,5 +73,14 @@ public class DashActivity extends AppCompatActivity implements View.OnClickListe
         if (v == main_add) {
             startActivity(new Intent(this, AddActivity.class));
         }
+        if (v == vm) {
+            startActivity(new Intent(this, VMActivity.class));
+        }
+//        if (v == lb) {
+//            startActivity(new Intent(this, LBActivity.class));
+//        }
+//        if (v == volume) {
+//            startActivity(new Intent(this, VolumeActivity.class));
+//        }
     }
 }

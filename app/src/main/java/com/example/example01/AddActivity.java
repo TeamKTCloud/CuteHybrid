@@ -1,17 +1,7 @@
 package com.example.example01;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,14 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class AddActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -93,7 +85,6 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             case android.R.id.home:
                 finish();
                 return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -161,7 +152,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
             //hashmap 만들기
             HashMap<String, String> result = new HashMap<>();
-            result.put(get_awsaccesskey, get_awssecretkey+", "+get_awsregion);
+            result.put(get_awsaccesskey, get_awssecretkey+","+get_awsregion);
 
             //firebase 정의
             mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -201,7 +192,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
 
             //hashmap 만들기
             HashMap<String, String> result = new HashMap<>();
-            result.put(get_azuretenantid, get_azureclient+", "+get_azurekey+", "+get_azuresubscription_id);
+            result.put(get_azuretenantid, get_azureclient+","+get_azurekey+","+get_azuresubscription_id);
 
             //firebase 정의
             mDatabase = FirebaseDatabase.getInstance().getReference();

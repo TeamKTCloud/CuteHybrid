@@ -37,5 +37,11 @@
         <activity
             android:name=".AWS_key_FragmentActivity">
         </activity>
+        <activity
+            android:name=".VMActivity">
+        </activity>
+        <activity
+            android:name=".Azure_key_FragmentActivity">
+        </activity>
     </application>
 </manifest>
