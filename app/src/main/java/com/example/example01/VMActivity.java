@@ -57,6 +57,8 @@ public class VMActivity extends AppCompatActivity {
         //User profile 가져오기
         firebaseUser = firebaseAuth.getCurrentUser();
 
+
+        //DB에서 정보 갖고 오기
         mDatabase.child(firebaseUser.getUid()).child("KT").child("Resources").child("VM").child("JSM").addValueEventListener(new ValueEventListener() {
 
             @Override
