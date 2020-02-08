@@ -57,7 +57,7 @@ public class VMActivity extends AppCompatActivity {
         //User profile 가져오기
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        mDatabase.child(firebaseUser.getUid()).child("KT").child("Resources").child("VM").addValueEventListener(new ValueEventListener() {
+        mDatabase.child(firebaseUser.getUid()).child("KT").child("Resources").child("VM").child("JSM").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,6 +75,7 @@ public class VMActivity extends AppCompatActivity {
             }
         });
     }
+    
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
