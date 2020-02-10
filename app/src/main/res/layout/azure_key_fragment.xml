@@ -99,21 +99,14 @@
         android:layout_margin="3dp"
         android:background="@color/line_color"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
 
         <Button
             android:id="@+id/azure_add_apply"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/blue"
-            android:padding="5dp"
-            android:text="Add Cloud"
-            android:textSize="15sp"
-            android:theme="@style/AppTheme" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="추가" />
+
 
 </LinearLayout>

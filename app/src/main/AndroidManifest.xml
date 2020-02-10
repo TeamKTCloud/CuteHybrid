@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.example01"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.example01">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,34 +14,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".JoinActivity">
+        <activity android:name=".Dash_Navi_Activity" />
+        <activity android:name=".JoinActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".DashActivity">
-        </activity>
-        <activity
-            android:name=".LoginActivity">
-        </activity>
-        <activity
-            android:name=".AddActivity">
-        </activity>
-        <activity
-            android:name=".KT_key_FragmentActivity">
-        </activity>
-        <activity
-            android:name=".AWS_key_FragmentActivity">
-        </activity>
-        <activity
-            android:name=".VMActivity">
-        </activity>
-        <activity
-            android:name=".Azure_key_FragmentActivity">
-        </activity>
+        <activity android:name=".DashFragment" />
+        <activity android:name=".ServiceFragment" />
+        <activity android:name=".SettingFragment" /> <!-- <activity android:name=".DashActivity"></activity> -->
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".AddActivity" />
+        <activity android:name=".KT_key_FragmentActivity" />
+        <activity android:name=".AWS_key_FragmentActivity" />
+        <activity android:name=".VMActivity" />
+        <activity android:name=".Azure_key_FragmentActivity" />
     </application>
+
 </manifest>

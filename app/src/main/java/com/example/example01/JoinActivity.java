@@ -17,6 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.lang.String;
 
 public class JoinActivity extends AppCompatActivity implements View.OnClickListener {
@@ -30,6 +34,8 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     ProgressDialog progressDialog;
     //define firebase object
     FirebaseAuth firebaseAuth;
+    DatabaseReference mDatabase;
+    FirebaseUser firebaseUser;
 
 
     @Override
@@ -44,7 +50,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
             //이미 로그인 되었다면 이 액티비티를 종료함
             finish();
             //그리고 Dash 액티비티를 연다.
-            startActivity(new Intent(getApplicationContext(), DashActivity.class)); //추가해 줄 ProfileActivity
+            startActivity(new Intent(getApplicationContext(), Dash_Navi_Activity.class)); //추가해 줄 ProfileActivity
         }
         //initializing views
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -83,8 +89,11 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            mDatabase = FirebaseDatabase.getInstance().getReference();
+                            firebaseUser = firebaseAuth.getCurrentUser();
+                            mDatabase.child(firebaseUser.getUid());
                             finish();
-                            startActivity(new Intent(getApplicationContext(), DashActivity.class));
+                            startActivity(new Intent(getApplicationContext(), Dash_Navi_Activity.class));
                         } else {
                             //에러발생시
                             textviewMessage.setText("에러유형\n - 이미 등록된 이메일  \n -암호 최소 6자리 이상 \n - 서버에러");

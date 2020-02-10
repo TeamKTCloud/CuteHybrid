@@ -12,15 +12,15 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:layout_height="75dp"
+        android:background="@color/darkgray">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/set_date"
             android:text="Add Cloud"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:layout_gravity="center"
             android:textColor="@android:color/white"/>
@@ -34,38 +34,41 @@
         <Button
             android:id="@+id/KT"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:padding="5dp"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:text="KT"
-            android:textColor="#273238"
+            android:textColor="@color/darkgray"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/kt_cloud"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:padding="15dp"/>
 
         <Button
             android:id="@+id/AWS"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:padding="5dp"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:text="AWS"
-            android:textColor="#273238"
+            android:textColor="@color/darkgray"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/aws"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:padding="17dp"/>
 
         <Button
             android:id="@+id/Azure"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:padding="5dp"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:text="Azure"
-            android:textColor="#273238"
+            android:textColor="@color/darkgray"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/azure"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:padding="17dp" />
     </LinearLayout>
 
     <LinearLayout
