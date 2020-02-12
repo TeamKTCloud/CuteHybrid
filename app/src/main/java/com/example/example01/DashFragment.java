@@ -24,7 +24,7 @@ import java.util.List;
 public class DashFragment extends Fragment {
 
     //firebase auth object
-    private static final String TAG = "VMActivity";
+    //private static final String TAG = "VMActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private DatabaseReference mDatabase;
@@ -73,8 +73,6 @@ public class DashFragment extends Fragment {
                 vmlist.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Object value = snapshot.getValue();
-                    String str = String.valueOf(value);
                     VMData vm = snapshot.getValue(VMData.class);
                     vmlist.add(vm);
                 }
@@ -90,7 +88,8 @@ public class DashFragment extends Fragment {
     }
     public void setadapter(List<VMData> vmlist) {
         VMAdapter vmadapter = new VMAdapter(getContext(), vmlist);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(vmadapter);
 
     }

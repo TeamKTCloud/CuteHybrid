@@ -25,12 +25,11 @@
         <activity android:name=".VMAdapter" />
         <activity android:name=".VMData" />
         <activity android:name=".ServiceFragment" />
-        <activity android:name=".SettingFragment" /> <!-- <activity android:name=".DashActivity"></activity> -->
+        <activity android:name=".SettingFragment" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".AddActivity" />
         <activity android:name=".KT_key_FragmentActivity" />
         <activity android:name=".AWS_key_FragmentActivity" />
-        <activity android:name=".VMActivity" />
         <activity android:name=".Azure_key_FragmentActivity" />
     </application>
 

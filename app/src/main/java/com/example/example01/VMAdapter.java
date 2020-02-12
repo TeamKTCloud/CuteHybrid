@@ -34,7 +34,11 @@ public class VMAdapter extends RecyclerView.Adapter {
         MessageVieHolder messageVieHolder = ((MessageVieHolder)holder);
 
         //레이아웃
-        messageVieHolder.list_title.setText(vmlist.get(position).getCreated());
+        messageVieHolder.name.setText(vmlist.get(position).getName());
+        messageVieHolder.state.setText(vmlist.get(position).getState());
+        messageVieHolder.created.setText(vmlist.get(position).getCreated());
+        messageVieHolder.zonename.setText(vmlist.get(position).getZonename());
+        messageVieHolder.templatename.setText(vmlist.get(position).getTemplatename());
 
     }
 
@@ -44,12 +48,20 @@ public class VMAdapter extends RecyclerView.Adapter {
     }
 
     private class MessageVieHolder extends RecyclerView.ViewHolder {
-        public TextView list_title;
+        public TextView name;
+        public TextView state;
+        public TextView created;
+        public TextView zonename;
+        public TextView templatename;
 
 
         public MessageVieHolder(View view) {
             super(view);
-            list_title = view.findViewById(R.id.list_title);
+            name = view.findViewById(R.id.name);
+            state = view.findViewById(R.id.state);
+            created = view.findViewById(R.id.created);
+            zonename = view.findViewById(R.id.zonenameval);
+            templatename = view.findViewById(R.id.templatenameval);
 
         }
     }
