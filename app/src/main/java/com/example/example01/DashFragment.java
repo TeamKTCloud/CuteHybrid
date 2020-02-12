@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,10 +30,9 @@ public class DashFragment extends Fragment {
     private DatabaseReference mDatabase;
     private FirebaseDatabase firebaseDatabase;
 
+    private RecyclerView recyclerView;
     private ListView listView;
-    private ArrayAdapter<Object> adapter;
-    private List<Object> vmlist = new ArrayList<>();
-    TextView textviewVM;
+    private List<VMData> vmlist = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,12 +44,8 @@ public class DashFragment extends Fragment {
 
         ViewGroup rootview = (ViewGroup) inflater.inflate(R.layout.fragment_dash, container, false);
 
-        listView = (ListView)rootview.findViewById(R.id.listView);
+        recyclerView = (RecyclerView)rootview.findViewById(R.id.recyclerView);
 
-        adapter = new ArrayAdapter<Object>(getActivity(), android.R.layout.simple_dropdown_item_1line, new ArrayList<Object>());
-        listView.setAdapter(adapter);
-
-        textviewVM =  (TextView)rootview.findViewById(R.id.textviewVM);
 
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
@@ -75,21 +70,15 @@ public class DashFragment extends Fragment {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                vmlist.clear();
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                  Log.d("VMActivity", "ValueEventListener : " + snapshot.toString());
-                    VM vm = new VM();
                     Object value = snapshot.getValue();
                     String str = String.valueOf(value);
-                    vmlist.add(value);
-                    adapter.add(value);
-//                  String str = dataSnapshot.toString();
-//                  Log.d("VMActivity", "Object to String  : " + str);
-//                  String str = DataSnapshot.getValue(String.class);
-//                  textviewVM.setText(str);
-
+                    VMData vm = snapshot.getValue(VMData.class);
+                    vmlist.add(vm);
                 }
-                adapter.notifyDataSetChanged();
-                listView.setSelection(adapter.getCount() - 1);
+                setadapter(vmlist);
             }
 
             @Override
@@ -99,36 +88,11 @@ public class DashFragment extends Fragment {
 
         return rootview;
     }
-       public class VM{
-        private String State;
-        private String Created;
-        private String CpuSpeed;
-
-        public String getState() {
-            return State;
-        }
-
-        public String getCreated() {
-            return Created;
-        }
-
-        public String getCpuSpeed() {
-            return CpuSpeed;
-        }
-
-        public void setState(String State) {
-            this.State = State;
-        }
-
-        public void setCreated(String Created) {
-            this.Created = Created;
-        }
-
-        public void setCpuSpeed(String CpuSpeed) {
-            this.CpuSpeed = CpuSpeed;
-        }
+    public void setadapter(List<VMData> vmlist) {
+        VMAdapter vmadapter = new VMAdapter(getContext(), vmlist);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(vmadapter);
 
     }
-
 }
 

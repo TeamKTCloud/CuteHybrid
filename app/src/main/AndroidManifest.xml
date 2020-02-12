@@ -22,6 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".DashFragment" />
+        <activity android:name=".VMAdapter" />
+        <activity android:name=".VMData" />
         <activity android:name=".ServiceFragment" />
         <activity android:name=".SettingFragment" /> <!-- <activity android:name=".DashActivity"></activity> -->
         <activity android:name=".LoginActivity" />
