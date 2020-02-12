@@ -3,6 +3,7 @@ package com.example.example01;
 import java.util.HashMap;
 import java.util.Map;
 
+//데이터 class
 class VMData {
     private String State;
     private String Created;
