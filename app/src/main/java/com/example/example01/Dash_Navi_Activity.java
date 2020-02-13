@@ -63,7 +63,7 @@ public class Dash_Navi_Activity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_dashboard:
                         getSupportFragmentManager().beginTransaction() .replace(R.id.frameLayout,dashFragment).commitAllowingStateLoss();
-                                return true;
+                        return true;
                     case R.id.navigation_service:
                         getSupportFragmentManager().beginTransaction() .replace(R.id.frameLayout,serviceFragment).commitAllowingStateLoss();
                         return true;

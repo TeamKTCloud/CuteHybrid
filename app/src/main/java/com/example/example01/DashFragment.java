@@ -1,10 +1,10 @@
 package com.example.example01;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,12 +27,11 @@ public class DashFragment extends Fragment {
     //private static final String TAG = "VMActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase_KT, mDatabase_AWS;
     private FirebaseDatabase firebaseDatabase;
 
     private RecyclerView recyclerView;
-    private ListView listView;
-    private List<VMData> vmlist = new ArrayList<>();
+    private List<VMData> vmlist;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,11 +45,13 @@ public class DashFragment extends Fragment {
 
         recyclerView = (RecyclerView)rootview.findViewById(R.id.recyclerView);
 
+        vmlist = new ArrayList<>();
+
 
         //initializing firebase authentication object
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //유저가 로그인 하지 않은 상태라면 null 상태이고 이 액티비티를 종료하고 로그인 액티비티를 연다.
+//      유저가 로그인 하지 않은 상태라면 null 상태이고 이 액티비티를 종료하고 로그인 액티비티를 연다.
 //        if (firebaseAuth.getCurrentUser() == null) {
 //            finish();
 //            startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -60,38 +61,57 @@ public class DashFragment extends Fragment {
         firebaseUser = firebaseAuth.getCurrentUser();
 
 
+
         //firebase 정의
         firebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabase =  firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Resources").child("VM");
-
+        mDatabase_KT =  firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Resources").child("VM");
+        mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Resources").child("VM");
+        Log.d("UID", "UID : " + firebaseUser.getUid());
 
         //DB에서 정보 갖고 오기
-        mDatabase.addValueEventListener(new ValueEventListener() {
-
+//        mDatabase_KT.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                // vmlist.clear();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    VMData vm = snapshot.getValue(VMData.class);
+//                    vmlist.add(vm);
+//                }
+//                setadapter(vmlist);
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+        ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                vmlist.clear();
 
+                // vmlist.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     VMData vm = snapshot.getValue(VMData.class);
                     vmlist.add(vm);
                 }
                 setadapter(vmlist);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
-        });
+        };
+
+        mDatabase_AWS.addValueEventListener(postListener);
+        mDatabase_KT.addValueEventListener(postListener);
+
+
 
         return rootview;
     }
     public void setadapter(List<VMData> vmlist) {
         VMAdapter vmadapter = new VMAdapter(getContext(), vmlist);
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(vmadapter);
-
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.example01;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ public class VMAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private List<VMData> vmlist;
+    private SparseBooleanArray selectedItems = new SparseBooleanArray();
+    // 직전에 클릭됐던 Item의 position
+    private int prePosition = -1;
 
     public VMAdapter(Context mContext, List vmlist) {
         this.mContext = mContext;
@@ -22,23 +26,24 @@ public class VMAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,parent,false);
-          View view = null;
-          LayoutInflater inf = LayoutInflater.from(mContext);
-          view = inf.inflate(R.layout.list_item, parent, false);
-          return new MessageVieHolder(view);
+
+        View view = null;
+        LayoutInflater inf = LayoutInflater.from(mContext);
+        view = inf.inflate(R.layout.list_item, parent, false);
+        return new MessageViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MessageVieHolder messageVieHolder = ((MessageVieHolder)holder);
+        MessageViewHolder messageViewHolder = ((MessageViewHolder)holder);
 
         //레이아웃
-        messageVieHolder.name.setText(vmlist.get(position).getName());
-        messageVieHolder.state.setText(vmlist.get(position).getState());
-        messageVieHolder.created.setText(vmlist.get(position).getCreated());
-        messageVieHolder.zonename.setText(vmlist.get(position).getZonename());
-        messageVieHolder.templatename.setText(vmlist.get(position).getTemplatename());
+        messageViewHolder.name.setText(vmlist.get(position).getName());
+        messageViewHolder.state.setText(vmlist.get(position).getState());
+        messageViewHolder.created.setText(vmlist.get(position).getCreated());
+        messageViewHolder.zonename.setText(vmlist.get(position).getZonename());
+        messageViewHolder.templatename.setText(vmlist.get(position).getTemplatename());
+
 
     }
 
@@ -47,7 +52,7 @@ public class VMAdapter extends RecyclerView.Adapter {
         return vmlist.size();
     }
 
-    private class MessageVieHolder extends RecyclerView.ViewHolder {
+    private class MessageViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public TextView state;
         public TextView created;
@@ -55,14 +60,13 @@ public class VMAdapter extends RecyclerView.Adapter {
         public TextView templatename;
 
 
-        public MessageVieHolder(View view) {
+        public MessageViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.name);
             state = view.findViewById(R.id.state);
-            created = view.findViewById(R.id.created);
+            created = view.findViewById(R.id.createdval);
             zonename = view.findViewById(R.id.zonenameval);
             templatename = view.findViewById(R.id.templatenameval);
-
         }
     }
 }

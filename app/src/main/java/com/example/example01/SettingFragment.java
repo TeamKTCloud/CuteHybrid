@@ -48,7 +48,6 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dashActivity.onFragmentChange(0);
-
             }
         });
 
@@ -57,7 +56,6 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 dashActivity.onFragmentChange(1);
-
             }
         });
         return rootview;
