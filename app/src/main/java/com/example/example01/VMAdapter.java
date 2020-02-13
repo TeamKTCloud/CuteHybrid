@@ -97,6 +97,7 @@ public class VMAdapter extends RecyclerView.Adapter {
             listitem.setOnClickListener(this);
         }
 
+        //list click해서 접고 펼치기
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
