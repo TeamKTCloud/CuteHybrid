@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listitem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".Dash_Navi_Activity">
-
 
     <ImageView
         android:id="@+id/imageView"
@@ -37,12 +36,12 @@
         android:id="@+id/state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
+        android:layout_marginStart="216dp"
         android:text="state"
         android:textAlignment="center"
         android:textSize="15dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/name"
-        app:layout_constraintStart_toEndOf="@+id/name" />
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/created"
