@@ -21,7 +21,7 @@ public class Dash_Navi_Activity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     FragmentTransaction fragmentTransaction;
-    DashFragment dashFragment = new DashFragment();
+    Swipe_Fragment swipeFragment = new Swipe_Fragment();
     ServiceFragment serviceFragment = new ServiceFragment();
     SettingFragment settingFragment = new SettingFragment();
 
@@ -53,7 +53,7 @@ public class Dash_Navi_Activity extends AppCompatActivity {
 //        textViewUserUID.setText("UID : "+user.getUid());
 
         //제일 처음 띄워줄 뷰 세티
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,dashFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,swipeFragment).commitAllowingStateLoss();
 
 
 
@@ -62,7 +62,7 @@ public class Dash_Navi_Activity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_dashboard:
-                        getSupportFragmentManager().beginTransaction() .replace(R.id.frameLayout,dashFragment).commitAllowingStateLoss();
+                        getSupportFragmentManager().beginTransaction() .replace(R.id.frameLayout,swipeFragment).commitAllowingStateLoss();
                         return true;
                     case R.id.navigation_service:
                         getSupportFragmentManager().beginTransaction() .replace(R.id.frameLayout,serviceFragment).commitAllowingStateLoss();

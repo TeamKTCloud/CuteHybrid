@@ -14,23 +14,29 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Dash_Navi_Activity" />
         <activity android:name=".JoinActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DashFragment" />
-        <activity android:name=".VMAdapter" />
-        <activity android:name=".VMData" />
-        <activity android:name=".ServiceFragment" />
-        <activity android:name=".SettingFragment" />
-        <activity android:name=".LoginActivity" />
         <activity android:name=".AddActivity" />
-        <activity android:name=".KT_key_FragmentActivity" />
         <activity android:name=".AWS_key_FragmentActivity" />
         <activity android:name=".Azure_key_FragmentActivity" />
+        <activity android:name=".Dash_Navi_Activity" />
+        <activity android:name=".DashFragment" />
+        <activity android:name=".KT_key_FragmentActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ServiceFragment" />
+        <activity android:name=".SettingFragment" />
+        <activity android:name=".Swipe_Fragment"/>
+        <activity android:name=".Swipe_Second_Fragment" />
+        <activity android:name=".VMAdapter" />
+        <activity android:name=".VMData" />
+
+
+
+
     </application>
 
 </manifest>

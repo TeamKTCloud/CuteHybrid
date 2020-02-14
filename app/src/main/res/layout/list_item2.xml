@@ -44,28 +44,6 @@
         app:layout_constraintStart_toEndOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/created"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="16dp"
-        android:text="Created"
-        android:textSize="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <TextView
-        android:id="@+id/createdval"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:text="createdval"
-        android:textSize="15dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/created"
-        app:layout_constraintStart_toEndOf="@+id/created" />
-
-
-    <TextView
         android:id="@+id/zonename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,39 +52,40 @@
         android:text="Zonename"
         android:textSize="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/created" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
     <TextView
         android:id="@+id/zonenameval"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="62dp"
+        android:layout_marginStart="52dp"
         android:text="zonenameval"
         android:textSize="15dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/zonename"
         app:layout_constraintStart_toEndOf="@+id/zonename" />
 
     <TextView
-        android:id="@+id/templatename"
+        android:id="@+id/serviceip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
-        android:layout_marginTop="15dp"
-        android:text="Templatename"
+        android:layout_marginTop="16dp"
+        android:text="Serviceip"
         android:textSize="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zonename" />
 
+
     <TextView
-        android:id="@+id/templatenameval"
+        android:id="@+id/serviceipval"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:text="templatenameval"
+        android:layout_marginStart="62dp"
+        android:text="serviceipval"
         android:textSize="15dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/templatename"
-        app:layout_constraintStart_toEndOf="@+id/templatename" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/serviceip"
+        app:layout_constraintStart_toEndOf="@+id/serviceip" />
 
 
     <View
@@ -115,7 +94,7 @@
         android:layout_height="0.5dp"
         android:layout_marginTop="7dp"
         android:background="@color/line_color"
-        app:layout_constraintTop_toBottomOf="@id/templatename"
+        app:layout_constraintTop_toBottomOf="@id/serviceip"
         tools:layout_editor_absoluteX="-35dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

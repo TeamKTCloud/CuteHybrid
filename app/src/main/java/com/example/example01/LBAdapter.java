@@ -13,17 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class VMAdapter extends RecyclerView.Adapter {
+public class LBAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
-    private List<VMData> vmlist;
+    private List<LBData> lblist;
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
     // 직전에 클릭됐던 Item의 position
     private int prePosition = -1;
 
-    public VMAdapter(Context mContext, List vmlist) {
+    public LBAdapter(Context mContext, List lblist) {
         this.mContext = mContext;
-        this.vmlist = vmlist;
+        this.lblist = lblist;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VMAdapter extends RecyclerView.Adapter {
 
         View view = null;
         LayoutInflater inf = LayoutInflater.from(mContext);
-        view = inf.inflate(R.layout.list_item, parent, false);
+        view = inf.inflate(R.layout.list_item2, parent, false);
         return new MessageViewHolder(view);
     }
 
@@ -39,29 +39,28 @@ public class VMAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
 
-        messageViewHolder.onBind(vmlist.get(position), position);
+        messageViewHolder.onBind(lblist.get(position), position);
 
         //레이아웃
 //        messageViewHolder.name.setText(vmlist.get(position).getName());
+
 
     }
 
     @Override
     public int getItemCount() {
-        return vmlist.size();
+        return lblist.size();
     }
 
     private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;
         public TextView state;
-        public TextView created;
         public TextView zonename;
-        public TextView templatename;
-        public TextView createdval;
+        public TextView serviceip;
         public TextView zonenameval;
-        public TextView templatenameval;
+        public TextView serviceipval;
         private ConstraintLayout listitem;
-        private VMData data;
+        private LBData data;
         private int position;
 
 
@@ -69,24 +68,21 @@ public class VMAdapter extends RecyclerView.Adapter {
             super(view);
             name = view.findViewById(R.id.name);
             state = view.findViewById(R.id.state);
-            created = view.findViewById(R.id.created);
             zonename = view.findViewById(R.id.zonename);
-            templatename = view.findViewById(R.id.templatename);
-            createdval = view.findViewById(R.id.createdval);
+            serviceip = view.findViewById(R.id.serviceip);
             zonenameval = view.findViewById(R.id.zonenameval);
-            templatenameval = view.findViewById(R.id.templatenameval);
+            serviceipval = view.findViewById(R.id.serviceipval);
             listitem = view.findViewById(R.id.listitem);
         }
 
-        void onBind(VMData data, int position) {
+        void onBind(LBData data, int position) {
             this.data = data;
             this.position = position;
 
             name.setText(data.getName());
             state.setText(data.getState());
-            createdval.setText(vmlist.get(position).getCreated());
-            zonenameval.setText(vmlist.get(position).getZonename());
-            templatenameval.setText(vmlist.get(position).getTemplatename());
+            zonenameval.setText(lblist.get(position).getZonename());
+            serviceipval.setText(lblist.get(position).getServiceip());
 
             changeVisibility(selectedItems.get(position));
 
@@ -134,20 +130,16 @@ public class VMAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
 
-                    created.requestLayout();
-                    createdval.requestLayout();
                     zonename.requestLayout();
                     zonenameval.requestLayout();
-                    templatename.requestLayout();
-                    templatenameval.requestLayout();
+                    serviceip.requestLayout();
+                    serviceipval.requestLayout();
 
                     // imageView가 실제로 사라지게하는 부분
-                    created.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
                     zonename.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-                    templatename.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-                    createdval.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+                    serviceip.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
                     zonenameval.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
-                    templatenameval.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+                    serviceipval.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
                 }
             });
             // Animation start
