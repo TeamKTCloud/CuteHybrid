@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,6 +25,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceFragment extends Fragment {
 
@@ -112,5 +114,10 @@ public class ServiceFragment extends Fragment {
 
 
         return rootview;
+    }
+    public void setadapter( ArrayList<Entry> dataVals) {
+        GraphAdapter graphadapter = new GraphAdapter(getContext(), dataVals);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(graphadapter);
     }
 }
