@@ -14,6 +14,8 @@ import androidx.viewpager.widget.ViewPager;
 public class Swipe_Fragment extends Fragment {
 
     private ViewPager vp;
+    private DashFragment df;
+    private Swipe_Second_Fragment ssf;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class Swipe_Fragment extends Fragment {
 
         Button btn_first = (Button)rootview.findViewById(R.id.btn_first);
         Button btn_second = (Button)rootview.findViewById(R.id.btn_second);
+
+        df = new DashFragment();
+        ssf = new Swipe_Second_Fragment();
 
         vp.setAdapter(new Swipe_Fragment.pagerAdapter(getFragmentManager()));
         vp.setCurrentItem(0);
@@ -60,12 +65,13 @@ public class Swipe_Fragment extends Fragment {
         @Override
         public Fragment getItem(int position)
         {
+
             switch(position)
             {
                 case 0:
-                    return new DashFragment();
+                    return df;
                 case 1:
-                    return new Swipe_Second_Fragment();
+                    return ssf;
                 default:
                     return null;
             }

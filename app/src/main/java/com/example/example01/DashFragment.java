@@ -48,18 +48,15 @@ public class DashFragment extends Fragment {
         vmlist = new ArrayList<>();
 
 
-        //initializing firebase authentication object
+        //사용자 인증, 사용자 프로필 갖고오기
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
 //      유저가 로그인 하지 않은 상태라면 null 상태이고 이 액티비티를 종료하고 로그인 액티비티를 연다.
 //        if (firebaseAuth.getCurrentUser() == null) {
 //            finish();
 //            startActivity(new Intent(getActivity(), LoginActivity.class));
 //        }
-
-        //User profile 가져오기
-        firebaseUser = firebaseAuth.getCurrentUser();
-
 
 
         //firebase 정의
@@ -89,7 +86,6 @@ public class DashFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                // vmlist.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     VMData vm = snapshot.getValue(VMData.class);
                     vmlist.add(vm);

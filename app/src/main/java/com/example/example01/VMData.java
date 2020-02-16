@@ -39,39 +39,19 @@ class VMData {
         return State;
     }
 
-    public void setState(String state) {
-        State = state;
-    }
-
     public String getCreated() {
         return Created;
-    }
-
-    public void setCreated(String created) {
-        Created = created;
     }
 
     public String getName() {
         return Name;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
-
     public String getZonename() {
         return Zonename;
     }
 
-    public void setZonename(String zonename) {
-        Zonename = zonename;
-    }
-
     public String getTemplatename() {
         return Templatename;
-    }
-
-    public void setTemplatename(String templatename) {
-        Templatename = templatename;
     }
 }
