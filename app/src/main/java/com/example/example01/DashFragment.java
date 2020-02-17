@@ -27,7 +27,7 @@ public class DashFragment extends Fragment {
     //private static final String TAG = "VMActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private DatabaseReference mDatabase_KT, mDatabase_AWS;
+    private DatabaseReference mDatabase, mDatabase_KT, mDatabase_AWS;
     private FirebaseDatabase firebaseDatabase;
 
     private RecyclerView recyclerView;
@@ -61,18 +61,20 @@ public class DashFragment extends Fragment {
 
         //firebase 정의
         firebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabase = firebaseDatabase.getReference(firebaseUser.getUid());
         mDatabase_KT =  firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Resources").child("VM");
         mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Resources").child("VM");
         Log.d("UID", "UID : " + firebaseUser.getUid());
 
         //DB에서 정보 갖고 오기
-//        mDatabase_KT.addValueEventListener(new ValueEventListener() {
+//        mDatabase.addValueEventListener(new ValueEventListener() {
 //
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
 //
 //                // vmlist.clear();
 //                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Log.d("Provider", "provider : " + snapshot.getKey());
 //                    VMData vm = snapshot.getValue(VMData.class);
 //                    vmlist.add(vm);
 //                }
@@ -82,11 +84,14 @@ public class DashFragment extends Fragment {
 //            public void onCancelled(DatabaseError databaseError) {
 //            }
 //        });
+
+
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
                     VMData vm = snapshot.getValue(VMData.class);
                     vmlist.add(vm);
                 }
@@ -99,6 +104,7 @@ public class DashFragment extends Fragment {
 
         mDatabase_AWS.addValueEventListener(postListener);
         mDatabase_KT.addValueEventListener(postListener);
+
 
 
 

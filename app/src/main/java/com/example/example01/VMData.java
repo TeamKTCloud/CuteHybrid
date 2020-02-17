@@ -1,10 +1,8 @@
 package com.example.example01;
 
-import java.util.HashMap;
-import java.util.Map;
-
 //데이터 class
 class VMData {
+    private String Provider;
     private String State;
     private String Created;
     private String Name;
@@ -15,24 +13,13 @@ class VMData {
 
     }
 
-    public VMData(String State, String Created, String Name, String Templatename, String Zonename) {
+    public VMData(String Provider, String State, String Created, String Name, String Templatename, String Zonename) {
+        this.Provider = Provider;
         this.State = State;
         this.Created = Created;
         this.Name = Name;
         this.Templatename = Templatename;
         this.Zonename = Zonename;
-    }
-
-    public Map<String, Object> toMap() {
-        Map<String, Object> result = new HashMap<>();
-        result.put("State", State);
-        result.put("Created", Created);
-        result.put("Name", Name);
-        result.put("Templatename", Templatename);
-        result.put("Zonename", Zonename);
-
-
-        return result;
     }
 
     public String getState() {
@@ -45,6 +32,10 @@ class VMData {
 
     public String getName() {
         return Name;
+    }
+
+    public String getProvider() {
+        return Provider;
     }
 
     public String getZonename() {

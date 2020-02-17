@@ -2,10 +2,12 @@ package com.example.example01;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -52,6 +54,7 @@ public class VMAdapter extends RecyclerView.Adapter {
     }
 
     private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imageView;
         public TextView name;
         public TextView state;
         public TextView created;
@@ -67,6 +70,7 @@ public class VMAdapter extends RecyclerView.Adapter {
 
         public MessageViewHolder(View view) {
             super(view);
+            imageView = view.findViewById(R.id.imageView);
             name = view.findViewById(R.id.name);
             state = view.findViewById(R.id.state);
             created = view.findViewById(R.id.created);
@@ -82,6 +86,20 @@ public class VMAdapter extends RecyclerView.Adapter {
             this.data = data;
             this.position = position;
 
+            Log.d("Provider", "provider : " + data.getProvider());
+
+            String str = data.getProvider();
+            if(str.equals("KT")) {
+                imageView.setImageResource(R.drawable.kt_cloud);
+            }
+            if(str.equals("AWS")) {
+                imageView.setImageResource(R.drawable.awslogo);
+            }
+            if(str.equals("Azure")) {
+                imageView.setImageResource(R.drawable.azure);
+            }
+
+//            imageView.setImageResource(R.drawable.awslogo);
             name.setText(data.getName());
             state.setText(data.getState());
             createdval.setText(vmlist.get(position).getCreated());

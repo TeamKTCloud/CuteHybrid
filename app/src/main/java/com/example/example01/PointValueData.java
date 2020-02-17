@@ -2,24 +2,35 @@ package com.example.example01;
 
 //데이터 class
 public class PointValueData {
-    float Time;
-    float Average;
-
+    String Time;
+    String Average;
+    String Provider;
+    String Name;
     public PointValueData() {
 
     }
 
-    public PointValueData(float Time, float Average) {
+    public PointValueData(String Time, String Average, String Provider, String Name) {
         this.Time =Time;
         this.Average = Average;
+        this.Provider = Provider;
+        this.Name = Name;
 
     }
 
-    public float getTime() {
+    public String getTime() {
         return Time;
     }
 
-    public float getAverage() {
+    public String getAverage() {
         return Average;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getProvider() {
+        return Provider;
     }
 }

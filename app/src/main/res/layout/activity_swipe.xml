@@ -17,7 +17,7 @@
             android:background="@color/darkgray"
             android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="첫번째 탭" />
+            android:text="VirtualMachines" />
 
         <Button
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -27,7 +27,7 @@
             android:background="@color/darkgray"
             android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="두번째 탭" />
+            android:text="LoadBalancers" />
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager

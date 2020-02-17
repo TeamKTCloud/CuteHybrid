@@ -6,27 +6,38 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GraphAdapter extends RecyclerView.Adapter {
 
+    LineChart lineChart;
+    LineDataSet lineDataSet = new LineDataSet(null, null);
+    ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+    LineData lineData;
     private Context mContext;
     ArrayList<Entry> dataVals;
+    List<PointValueData> list;
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
     // 직전에 클릭됐던 Item의 position
     private int prePosition = -1;
 
-    public GraphAdapter(Context mContext, ArrayList<Entry> dataVals) {
+    public GraphAdapter(Context mContext, ArrayList<Entry> dataVals, List<PointValueData> list) {
         this.mContext = mContext;
         this.dataVals = dataVals;
+        this.list = list;
     }
 
     @Override
@@ -42,7 +53,8 @@ public class GraphAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
 
-        messageViewHolder.onBind(dataVals.get(position), position);
+        messageViewHolder.onBind(dataVals.get(position), position, list.get(position));
+
 
         //레이아웃
 //        messageViewHolder.name.setText(vmlist.get(position).getName());
@@ -55,30 +67,57 @@ public class GraphAdapter extends RecyclerView.Adapter {
     }
 
     private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imageView;
         public TextView name;
         public TextView cpu;
         public LineChart chart;
 
-        private RelativeLayout graphitem;
+        private ConstraintLayout graphitem;
+        private PointValueData data2;
         private Entry data;
         private int position;
 
 
         public MessageViewHolder(View view) {
             super(view);
+            imageView = view.findViewById(R.id.imageView);
             name = view.findViewById(R.id.name);
             cpu = view.findViewById(R.id.cpu);
             chart = view.findViewById(R.id.chart);
             graphitem = view.findViewById(R.id.graphitem);
         }
 
-        void onBind(Entry data, int position) {
+        void onBind(Entry data, int position, PointValueData data2) {
             this.data = data;
+            this.data2 = data2;
             this.position = position;
 
-            changeVisibility(selectedItems.get(position));
+            String str = data2.getProvider();
+            if(str.equals("KT")) {
+                imageView.setImageResource(R.drawable.kt_cloud);
+            }
+            if(str.equals("AWS")) {
+                imageView.setImageResource(R.drawable.awslogo);
+            }
+            if(str.equals("Azure")) {
+                imageView.setImageResource(R.drawable.azure);
+            }
 
+            name.setText(data2.getName());
+            changeVisibility(selectedItems.get(position));
+            showChart(dataVals);
             graphitem.setOnClickListener(this);
+        }
+
+        private void showChart(ArrayList<Entry> dataVals) {
+            lineDataSet.setValues(dataVals);
+            lineDataSet.setLabel("CPU Utilization");
+            iLineDataSets.clear();
+            iLineDataSets.add(lineDataSet);
+            lineData = new LineData(iLineDataSets);
+            chart.clear();
+            chart.setData(lineData);
+            chart.invalidate();
         }
 
         //list click해서 접고 펼치기

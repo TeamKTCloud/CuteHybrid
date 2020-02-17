@@ -31,9 +31,10 @@ public class ServiceFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase , mDatabase_KT, mDatabase_AWS;
     private FirebaseDatabase firebaseDatabase;
     private RecyclerView recyclerView;
+    private List<PointValueData> list;
 
     GraphView graphView;
     LineGraphSeries series;
@@ -58,11 +59,16 @@ public class ServiceFragment extends Fragment {
 
         lineChart = (LineChart) rootview.findViewById(R.id.chart);
         recyclerView = (RecyclerView)rootview.findViewById(R.id.recyclerView2);
+        list = new ArrayList<>();
+
 //        graphView = (GraphView) rootview.findViewById(R.id.chart);
 //        series = new LineGraphSeries();
 //        graphView.addSeries(series);
 
-        mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization").child("JSM");
+
+        mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring");
+        mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization").child("JSM");
+        mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization").child("aws_test01");
 
 
         ValueEventListener postListener = new ValueEventListener() {
@@ -73,35 +79,20 @@ public class ServiceFragment extends Fragment {
 //                DataPoint[] dp = new DataPoint[(int) dataSnapshot.getChildrenCount()];
 //                int index = 0;
 
-                if (dataSnapshot.hasChildren()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //                        Log.d("ServiceFragment", "graph : " + snapshot.getValue());
-                        PointValueData data = snapshot.getValue(PointValueData.class);
+                    PointValueData data = snapshot.getValue(PointValueData.class);
+                    list.add(data);
+                    float time = Float.parseFloat(data.getTime());
+                    float average = Float.parseFloat(data.getAverage());
 //                    dp[index] = new DataPoint( data.getTime(), data.getAverage());
 //                    index++;
-                        dataVals.add(new Entry(data.getTime(), data.getAverage()));
-                    }
+                    dataVals.add(new Entry(time , average));
+                }
 //                series.resetData(dp);
-                    showChart(dataVals);
-                    setadapter(dataVals);
-                }
-                else {
-                    lineChart.clear();
-                    lineChart.invalidate();
-                }
+                setadapter(dataVals, list);
+//                showChart(dataVals);
             }
-
-            private void showChart(ArrayList<Entry> dataVals) {
-                lineDataSet.setValues(dataVals);
-                lineDataSet.setLabel("DataSet 1");
-                iLineDataSets.clear();
-                iLineDataSets.add(lineDataSet);
-                lineData = new LineData(iLineDataSets);
-                lineChart.clear();
-                lineChart.setData(lineData);
-                lineChart.invalidate();
-            }
-
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -109,14 +100,13 @@ public class ServiceFragment extends Fragment {
             }
         };
 
-
-        mDatabase.addValueEventListener(postListener);
-
+        mDatabase_KT.addValueEventListener(postListener);
+        mDatabase_AWS.addValueEventListener(postListener);
 
         return rootview;
     }
-    public void setadapter( ArrayList<Entry> dataVals) {
-        GraphAdapter graphadapter = new GraphAdapter(getContext(), dataVals);
+    public void setadapter(ArrayList<Entry> dataVals, List<PointValueData> list) {
+        GraphAdapter graphadapter = new GraphAdapter(getContext(), dataVals, list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(graphadapter);
     }
