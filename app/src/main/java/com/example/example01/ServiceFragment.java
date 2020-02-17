@@ -71,7 +71,7 @@ public class ServiceFragment extends Fragment {
         mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization").child("aws_test01");
 
 
-        //모니터링 recyclerview
+        //모니터링 recyclerview....
         ValueEventListener postListener = new ValueEventListener() {
 
             @Override
