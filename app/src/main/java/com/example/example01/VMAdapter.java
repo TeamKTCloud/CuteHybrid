@@ -2,7 +2,6 @@ package com.example.example01;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +63,7 @@ public class VMAdapter extends RecyclerView.Adapter {
         public TextView zonenameval;
         public TextView templatenameval;
         private ConstraintLayout listitem;
+
         private VMData data;
         private int position;
 
@@ -86,8 +86,6 @@ public class VMAdapter extends RecyclerView.Adapter {
             this.data = data;
             this.position = position;
 
-            Log.d("Provider", "provider : " + data.getProvider());
-
             String str = data.getProvider();
             if(str.equals("KT")) {
                 imageView.setImageResource(R.drawable.kt_cloud);
@@ -99,7 +97,6 @@ public class VMAdapter extends RecyclerView.Adapter {
                 imageView.setImageResource(R.drawable.azure);
             }
 
-//            imageView.setImageResource(R.drawable.awslogo);
             name.setText(data.getName());
             state.setText(data.getState());
             createdval.setText(vmlist.get(position).getCreated());

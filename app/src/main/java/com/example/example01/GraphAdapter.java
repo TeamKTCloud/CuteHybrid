@@ -23,18 +23,18 @@ import java.util.List;
 
 public class GraphAdapter extends RecyclerView.Adapter {
 
-    LineChart lineChart;
-    LineDataSet lineDataSet = new LineDataSet(null, null);
-    ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
-    LineData lineData;
+    private LineChart lineChart;
+    private LineDataSet lineDataSet = new LineDataSet(null, null);
+    private ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+    private LineData lineData;
     private Context mContext;
-    ArrayList<Entry> dataVals;
-    List<PointValueData> list;
+    private ArrayList<Entry> dataVals;
+    private List<PointValueData> list;
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
     // 직전에 클릭됐던 Item의 position
     private int prePosition = -1;
 
-    public GraphAdapter(Context mContext, ArrayList<Entry> dataVals, List<PointValueData> list) {
+    public GraphAdapter(Context mContext, ArrayList<Entry> dataVals, List list) {
         this.mContext = mContext;
         this.dataVals = dataVals;
         this.list = list;
@@ -53,7 +53,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
 
-        messageViewHolder.onBind(dataVals.get(position), position, list.get(position));
+        messageViewHolder.onBind(dataVals.get(position), list.get(position), position);
 
 
         //레이아웃
@@ -63,7 +63,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return dataVals.size();
+        return list.size();
     }
 
     private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -71,10 +71,10 @@ public class GraphAdapter extends RecyclerView.Adapter {
         public TextView name;
         public TextView cpu;
         public LineChart chart;
-
         private ConstraintLayout graphitem;
+
+        private Entry data1;
         private PointValueData data2;
-        private Entry data;
         private int position;
 
 
@@ -87,10 +87,12 @@ public class GraphAdapter extends RecyclerView.Adapter {
             graphitem = view.findViewById(R.id.graphitem);
         }
 
-        void onBind(Entry data, int position, PointValueData data2) {
-            this.data = data;
+        void onBind(Entry data1, PointValueData data2, int position) {
+            this.data1 = data1;
             this.data2 = data2;
             this.position = position;
+
+            showChart(dataVals);
 
             String str = data2.getProvider();
             if(str.equals("KT")) {
@@ -105,7 +107,6 @@ public class GraphAdapter extends RecyclerView.Adapter {
 
             name.setText(data2.getName());
             changeVisibility(selectedItems.get(position));
-            showChart(dataVals);
             graphitem.setOnClickListener(this);
         }
 

@@ -105,9 +105,6 @@ public class DashFragment extends Fragment {
         mDatabase_AWS.addValueEventListener(postListener);
         mDatabase_KT.addValueEventListener(postListener);
 
-
-
-
         return rootview;
     }
     public void setadapter(List<VMData> vmlist) {

@@ -21,8 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +32,7 @@ public class ServiceFragment extends Fragment {
     private DatabaseReference mDatabase , mDatabase_KT, mDatabase_AWS;
     private FirebaseDatabase firebaseDatabase;
     private RecyclerView recyclerView;
-    private List<PointValueData> list;
 
-    GraphView graphView;
-    LineGraphSeries series;
     LineChart lineChart;
     LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
@@ -59,11 +54,6 @@ public class ServiceFragment extends Fragment {
 
         lineChart = (LineChart) rootview.findViewById(R.id.chart);
         recyclerView = (RecyclerView)rootview.findViewById(R.id.recyclerView2);
-        list = new ArrayList<>();
-
-//        graphView = (GraphView) rootview.findViewById(R.id.chart);
-//        series = new LineGraphSeries();
-//        graphView.addSeries(series);
 
 
         mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring");
@@ -73,26 +63,19 @@ public class ServiceFragment extends Fragment {
 
         //모니터링 recyclerview.......
         ValueEventListener postListener = new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Entry> dataVals = new ArrayList<Entry>();
-//                DataPoint[] dp = new DataPoint[(int) dataSnapshot.getChildrenCount()];
-//                int index = 0;
-
+                List<PointValueData> list = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //                        Log.d("ServiceFragment", "graph : " + snapshot.getValue());
                     PointValueData data = snapshot.getValue(PointValueData.class);
                     list.add(data);
                     float time = Float.parseFloat(data.getTime());
                     float average = Float.parseFloat(data.getAverage());
-//                    dp[index] = new DataPoint( data.getTime(), data.getAverage());
-//                    index++;
                     dataVals.add(new Entry(time , average));
                 }
-//                series.resetData(dp);
                 setadapter(dataVals, list);
-//                showChart(dataVals);
             }
 
             @Override
