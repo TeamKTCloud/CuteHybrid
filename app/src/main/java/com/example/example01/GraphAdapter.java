@@ -20,6 +20,13 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +44,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
     // 직전에 클릭됐던 Item의 position
     private int prePosition = -1;
 
-    public GraphAdapter(Context mContext, ArrayList<Entry> dataVals, List list) {
+    public GraphAdapter(Context mContext, List list) {
         this.mContext = mContext;
         this.dataVals = dataVals;
         this.list = list;
@@ -56,7 +63,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
 
-        messageViewHolder.onBind(dataVals.get(position), list.get(position), position);
+        messageViewHolder.onBind(list.get(position), position);
 
 
         //레이아웃
@@ -91,7 +98,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
         }
 
 
-        void onBind(Entry data1, PointValueData data2, int position) {
+        void onBind(PointValueData data2, int position) {
             this.data1 = data1;
             this.data2 = data2;
             this.position = position;
@@ -101,20 +108,46 @@ public class GraphAdapter extends RecyclerView.Adapter {
 //            float average = Float.parseFloat(data2.getAverage());
 //            dataVals.add(new Entry(time , average));
 
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+            DatabaseReference mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
+            DatabaseReference mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization");
+            ArrayList<Entry> dataVals = new ArrayList<Entry>();
+            ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<Entry> dataVals = new ArrayList<Entry>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        PointValueData data = snapshot.getValue(PointValueData.class);
+                        float time = Float.parseFloat(data.getTime());
+                        float average = Float.parseFloat(data.getAverage());
+                        dataVals.add(new Entry(time , average));
+                    }
+                    showChart(dataVals);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            };
+
             String str = data2.getProvider();
-            if (str.equals("KT")) {
-                imageView.setImageResource(R.drawable.kt_cloud);
-            }
             if (str.equals("AWS")) {
                 imageView.setImageResource(R.drawable.awslogo);
+                mDatabase_AWS.child("aws_test01").addValueEventListener(postListener);
+                mDatabase_AWS.child("aws_test02").addValueEventListener(postListener);
+            }
+            if (str.equals("KT")) {
+                imageView.setImageResource(R.drawable.kt_cloud);
+                mDatabase_KT.child("JSM").addValueEventListener(postListener);
             }
             if (str.equals("Azure")) {
                 imageView.setImageResource(R.drawable.azure2);
             }
 
             name.setText(data2.getName());
-
-            showChart(dataVals);
+//            showChart(dataVals);
             changeVisibility(selectedItems.get(position));
             graphitem.setOnClickListener(this);
             graphitem.setOnCreateContextMenuListener(this);

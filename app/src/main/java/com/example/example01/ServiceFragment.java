@@ -34,6 +34,9 @@ public class ServiceFragment extends Fragment {
     private FirebaseDatabase firebaseDatabase;
     private RecyclerView recyclerView;
 
+    private List<PointValueData> list;
+    private ArrayList<Entry> dataVals;
+
     LineChart lineChart;
     LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
@@ -56,6 +59,8 @@ public class ServiceFragment extends Fragment {
         lineChart = (LineChart) rootview.findViewById(R.id.chart);
         recyclerView = (RecyclerView)rootview.findViewById(R.id.recyclerView2);
 
+        list = new ArrayList<>();
+        dataVals = new ArrayList<Entry>();
 
         mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring");
         mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
@@ -66,18 +71,17 @@ public class ServiceFragment extends Fragment {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Entry> dataVals = new ArrayList<Entry>();
-                List<PointValueData> list = new ArrayList<>();
+//                ArrayList<Entry> dataVals = new ArrayList<Entry>();
+//                List<PointValueData> list = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//
                     PointValueData data = snapshot.getValue(PointValueData.class);
                     Log.d("ServiceFragment", "graph : " + data);
                     list.add(data);
-                    float time = Float.parseFloat(data.getTime());
-                    float average = Float.parseFloat(data.getAverage());
-                    dataVals.add(new Entry(time , average));
+//                    float time = Float.parseFloat(data.getTime());
+//                    float average = Float.parseFloat(data.getAverage());
+//                    dataVals.add(new Entry(time , average));
                 }
-                setadapter(dataVals, list);
+                setadapter(list);
             }
 
             @Override
@@ -85,13 +89,14 @@ public class ServiceFragment extends Fragment {
             }
         };
 
-        mDatabase_KT.child("JSM").addValueEventListener(postListener);
         mDatabase_AWS.child("aws_test01").addValueEventListener(postListener);
+        mDatabase_AWS.child("aws_test02").addValueEventListener(postListener);
+        mDatabase_KT.child("JSM").addValueEventListener(postListener);
 
         return rootview;
     }
-    public void setadapter(ArrayList<Entry> dataVals, List<PointValueData> list) {
-        GraphAdapter graphadapter = new GraphAdapter(getContext(), dataVals, list);
+    public void setadapter(List<PointValueData> list) {
+        GraphAdapter graphadapter = new GraphAdapter(getContext(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(graphadapter);
     }
