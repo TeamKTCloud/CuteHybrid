@@ -94,7 +94,7 @@ public class VMAdapter extends RecyclerView.Adapter {
                 imageView.setImageResource(R.drawable.awslogo);
             }
             if(str.equals("Azure")) {
-                imageView.setImageResource(R.drawable.azure);
+                imageView.setImageResource(R.drawable.azure2);
             }
 
             name.setText(data.getName());

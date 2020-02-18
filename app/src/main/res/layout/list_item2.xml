@@ -13,8 +13,6 @@
         android:layout_height="33dp"
         android:layout_marginTop="12dp"
         android:contentDescription="@string/stringvalue"
-        android:src="@drawable/kt_cloud"
-
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -27,7 +27,7 @@ public class DashFragment extends Fragment {
     //private static final String TAG = "VMActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private DatabaseReference mDatabase, mDatabase_KT, mDatabase_AWS;
+    private DatabaseReference mDatabase, mDatabase_KT, mDatabase_AWS, mDatabase_Azure;
     private FirebaseDatabase firebaseDatabase;
 
     private RecyclerView recyclerView;
@@ -64,6 +64,7 @@ public class DashFragment extends Fragment {
         mDatabase = firebaseDatabase.getReference(firebaseUser.getUid());
         mDatabase_KT =  firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Resources").child("VM");
         mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Resources").child("VM");
+        mDatabase_Azure = firebaseDatabase.getReference(firebaseUser.getUid()).child("Azure").child("Resources").child("VM");
         Log.d("UID", "UID : " + firebaseUser.getUid());
 
         //DB에서 정보 갖고 오기
@@ -104,6 +105,7 @@ public class DashFragment extends Fragment {
 
         mDatabase_AWS.addValueEventListener(postListener);
         mDatabase_KT.addValueEventListener(postListener);
+        mDatabase_Azure.addValueEventListener(postListener);
 
         return rootview;
     }

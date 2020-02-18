@@ -3,7 +3,10 @@ package com.example.example01;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.SparseBooleanArray;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -66,7 +69,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,  View.OnCreateContextMenuListener {
         public ImageView imageView;
         public TextView name;
         public TextView cpu;
@@ -87,32 +90,39 @@ public class GraphAdapter extends RecyclerView.Adapter {
             graphitem = view.findViewById(R.id.graphitem);
         }
 
+
         void onBind(Entry data1, PointValueData data2, int position) {
             this.data1 = data1;
             this.data2 = data2;
             this.position = position;
 
-            showChart(dataVals);
+//            ArrayList<Entry> dataVals = new ArrayList<Entry>();
+//            float time = Float.parseFloat(data2.getTime());
+//            float average = Float.parseFloat(data2.getAverage());
+//            dataVals.add(new Entry(time , average));
 
             String str = data2.getProvider();
-            if(str.equals("KT")) {
+            if (str.equals("KT")) {
                 imageView.setImageResource(R.drawable.kt_cloud);
             }
-            if(str.equals("AWS")) {
+            if (str.equals("AWS")) {
                 imageView.setImageResource(R.drawable.awslogo);
             }
-            if(str.equals("Azure")) {
-                imageView.setImageResource(R.drawable.azure);
+            if (str.equals("Azure")) {
+                imageView.setImageResource(R.drawable.azure2);
             }
 
             name.setText(data2.getName());
+
+            showChart(dataVals);
             changeVisibility(selectedItems.get(position));
             graphitem.setOnClickListener(this);
+            graphitem.setOnCreateContextMenuListener(this);
         }
 
         private void showChart(ArrayList<Entry> dataVals) {
             lineDataSet.setValues(dataVals);
-            lineDataSet.setLabel("CPU Utilization");
+            lineDataSet.setLabel("CPU Utilization(percent)");
             iLineDataSets.clear();
             iLineDataSets.add(lineDataSet);
             lineData = new LineData(iLineDataSets);
@@ -146,6 +156,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
 
         /**
          * 클릭된 Item의 상태 변경
+         *
          * @param isExpanded Item을 펼칠 것인지 여부
          */
         private void changeVisibility(final boolean isExpanded) {
@@ -174,5 +185,27 @@ public class GraphAdapter extends RecyclerView.Adapter {
             // Animation start
             va.start();
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+            MenuItem Delete = menu.add(Menu.NONE, 1002, 1, "삭제");
+            Delete.setOnMenuItemClickListener(onEditMenu);
+
+        }
+
+        private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
+
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case 1002:
+                        list.remove(getAdapterPosition());
+                        notifyItemRemoved(getAdapterPosition());
+                        notifyItemRangeChanged(getAdapterPosition(), list.size());
+                        break;
+                }
+                return true;
+            }
+        };
     }
 }

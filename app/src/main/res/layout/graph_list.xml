@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         android:layout_marginTop="16dp"
-        android:text="CPU Utilization"
+        android:text="CPU Utilization(percent)"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

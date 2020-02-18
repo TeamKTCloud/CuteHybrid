@@ -1,6 +1,7 @@
 package com.example.example01;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +58,8 @@ public class ServiceFragment extends Fragment {
 
 
         mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring");
-        mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization").child("JSM");
-        mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization").child("aws_test01");
+        mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
+        mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization");
 
 
         //모니터링 recyclerview.......
@@ -68,8 +69,9 @@ public class ServiceFragment extends Fragment {
                 ArrayList<Entry> dataVals = new ArrayList<Entry>();
                 List<PointValueData> list = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                        Log.d("ServiceFragment", "graph : " + snapshot.getValue());
+//
                     PointValueData data = snapshot.getValue(PointValueData.class);
+                    Log.d("ServiceFragment", "graph : " + data);
                     list.add(data);
                     float time = Float.parseFloat(data.getTime());
                     float average = Float.parseFloat(data.getAverage());
@@ -80,12 +82,11 @@ public class ServiceFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         };
 
-        mDatabase_KT.addValueEventListener(postListener);
-        mDatabase_AWS.addValueEventListener(postListener);
+        mDatabase_KT.child("JSM").addValueEventListener(postListener);
+        mDatabase_AWS.child("aws_test01").addValueEventListener(postListener);
 
         return rootview;
     }

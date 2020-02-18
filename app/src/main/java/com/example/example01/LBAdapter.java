@@ -6,6 +6,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -53,6 +54,7 @@ public class LBAdapter extends RecyclerView.Adapter {
     }
 
     private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public ImageView imageView;
         public TextView name;
         public TextView state;
         public TextView zonename;
@@ -66,6 +68,7 @@ public class LBAdapter extends RecyclerView.Adapter {
 
         public MessageViewHolder(View view) {
             super(view);
+            imageView = view.findViewById(R.id.imageView);
             name = view.findViewById(R.id.name);
             state = view.findViewById(R.id.state);
             zonename = view.findViewById(R.id.zonename);
@@ -78,6 +81,17 @@ public class LBAdapter extends RecyclerView.Adapter {
         void onBind(LBData data, int position) {
             this.data = data;
             this.position = position;
+
+            String str = data.getProvider();
+            if (str.equals("KT")) {
+                imageView.setImageResource(R.drawable.kt_cloud);
+            }
+            if (str.equals("AWS")) {
+                imageView.setImageResource(R.drawable.awslogo);
+            }
+            if (str.equals("Azure")) {
+                imageView.setImageResource(R.drawable.azure2);
+            }
 
             name.setText(data.getName());
             state.setText(data.getState());
