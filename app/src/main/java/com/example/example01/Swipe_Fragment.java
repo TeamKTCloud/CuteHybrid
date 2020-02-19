@@ -8,15 +8,14 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import androidx.viewpager.widget.ViewPager;
 
 public class Swipe_Fragment extends Fragment {
 
+    private myPagerAdapter _mpa;
     private ViewPager vp;
-    private DashFragment df;
-    private Swipe_Second_Fragment ssf;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,18 +26,14 @@ public class Swipe_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ViewGroup rootview = (ViewGroup) inflater.inflate(R.layout.activity_swipe, container,false);
-
-        vp = (ViewPager)rootview.findViewById(R.id.vp);
+        vp = (ViewPager) rootview.findViewById(R.id.vp);
 
         Button btn_first = (Button)rootview.findViewById(R.id.btn_first);
         Button btn_second = (Button)rootview.findViewById(R.id.btn_second);
 
-        df = new DashFragment();
-        ssf = new Swipe_Second_Fragment();
-
-        vp.setAdapter(new Swipe_Fragment.pagerAdapter(getFragmentManager()));
-        vp.setCurrentItem(0);
-
+        this._mpa = new myPagerAdapter(getChildFragmentManager());
+        vp.setAdapter(this._mpa);
+        vp.setOffscreenPageLimit(2);
         btn_first.setOnClickListener(movePageListener);
         btn_first.setTag(0);
         btn_second.setOnClickListener(movePageListener);
@@ -53,12 +48,12 @@ public class Swipe_Fragment extends Fragment {
         public void onClick(View v)
         {
             int tag = (int) v.getTag();
-            vp.setCurrentItem(tag);
+            _mpa.getItem(tag);
         }
     };
-    private class pagerAdapter extends FragmentStatePagerAdapter
+    public class myPagerAdapter extends FragmentPagerAdapter
     {
-        public pagerAdapter(FragmentManager fm)
+        public myPagerAdapter(FragmentManager fm)
         {
             super(fm);
         }
@@ -69,9 +64,9 @@ public class Swipe_Fragment extends Fragment {
             switch(position)
             {
                 case 0:
-                    return df;
+                    return new DashFragment();
                 case 1:
-                    return ssf;
+                    return new Swipe_Second_Fragment();
                 default:
                     return null;
             }
