@@ -17,6 +17,7 @@
         <activity android:name=".JoinActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,17 +34,17 @@
         <activity android:name=".PointValueData" />
         <activity android:name=".ServiceFragment" />
         <activity android:name=".SettingFragment" />
-        <activity android:name=".Swipe_Fragment"/>
+        <activity android:name=".Swipe_Fragment" />
         <activity android:name=".Swipe_Second_Fragment" />
         <activity android:name=".VMAdapter" />
         <activity android:name=".VMData" />
 
-        <service
-            android:name=".FirebaseInstanceIDService">
+
+        <service android:name=".FirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
     </application>
+
 </manifest>

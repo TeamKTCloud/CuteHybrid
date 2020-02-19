@@ -1,5 +1,6 @@
 package com.example.example01;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,9 +31,10 @@ public class ServiceFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private DatabaseReference mDatabase , mDatabase_KT, mDatabase_AWS;
+    private DatabaseReference mDatabase , mDatabase_KT, mDatabase_AWS, mDatabase_Azure;
     private FirebaseDatabase firebaseDatabase;
     private RecyclerView recyclerView;
+    private ProgressDialog progressDialog;
 
     private List<PointValueData> list;
     private ArrayList<Entry> dataVals;
@@ -52,6 +54,8 @@ public class ServiceFragment extends Fragment {
 
         ViewGroup rootview = (ViewGroup) inflater.inflate(R.layout.fragment_service, container, false);
 
+        progressDialog = new ProgressDialog(getContext());
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -65,6 +69,7 @@ public class ServiceFragment extends Fragment {
         mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring");
         mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
         mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization");
+        mDatabase_Azure = firebaseDatabase.getReference(firebaseUser.getUid()).child("Azure").child("Monitoring").child("CPUUtilization");
 
 
         //모니터링 recyclerview.......
@@ -91,7 +96,10 @@ public class ServiceFragment extends Fragment {
 
         mDatabase_AWS.child("aws_test01").addValueEventListener(postListener);
         mDatabase_AWS.child("aws_test02").addValueEventListener(postListener);
+        mDatabase_AWS.child("aws_test03").addValueEventListener(postListener);
         mDatabase_KT.child("JSM").addValueEventListener(postListener);
+        mDatabase_KT.child("example01").addValueEventListener(postListener);
+        mDatabase_Azure.child("azure-test").addValueEventListener(postListener);
 
         return rootview;
     }

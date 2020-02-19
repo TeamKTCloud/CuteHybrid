@@ -108,12 +108,16 @@ public class GraphAdapter extends RecyclerView.Adapter {
 //            float average = Float.parseFloat(data2.getAverage());
 //            dataVals.add(new Entry(time , average));
 
+
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
             DatabaseReference mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
             DatabaseReference mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization");
+            DatabaseReference mDatabase_Azure = firebaseDatabase.getReference(firebaseUser.getUid()).child("Azure").child("Monitoring").child("CPUUtilization");
+
+
             ArrayList<Entry> dataVals = new ArrayList<Entry>();
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
@@ -137,13 +141,16 @@ public class GraphAdapter extends RecyclerView.Adapter {
                 imageView.setImageResource(R.drawable.awslogo);
                 mDatabase_AWS.child("aws_test01").addValueEventListener(postListener);
                 mDatabase_AWS.child("aws_test02").addValueEventListener(postListener);
+                mDatabase_AWS.child("aws_test03").addValueEventListener(postListener);
             }
             if (str.equals("KT")) {
                 imageView.setImageResource(R.drawable.kt_cloud);
                 mDatabase_KT.child("JSM").addValueEventListener(postListener);
+                mDatabase_KT.child("example01").addValueEventListener(postListener);
             }
             if (str.equals("Azure")) {
                 imageView.setImageResource(R.drawable.azure2);
+                mDatabase_Azure.child("azure-test").addValueEventListener(postListener);
             }
 
             name.setText(data2.getName());

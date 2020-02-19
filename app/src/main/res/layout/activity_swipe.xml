@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:orientation="horizontal">
+
         <Button
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/btn_first"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:background="@color/darkgray"
             android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="VirtualMachines" />
+            android:text="VM"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
 
         <Button
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/btn_second"
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:background="@color/darkgray"
             android:textColor="@color/white"
             android:layout_weight="1"
-            android:text="LoadBalancers" />
+            android:text="LB"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
