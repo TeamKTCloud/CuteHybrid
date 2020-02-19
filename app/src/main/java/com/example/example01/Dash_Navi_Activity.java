@@ -2,6 +2,7 @@ package com.example.example01;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -10,9 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class Dash_Navi_Activity extends AppCompatActivity {
 
@@ -38,6 +45,7 @@ public class Dash_Navi_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_dash__navi_);
         bottomNavigationView = findViewById(R.id.nav_view);
 
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         //유저가 로그인 하지 않은 상태라면 null 상태이고 이 액티비티를 종료하고 로그인 액티비티를 연다.
@@ -55,7 +63,25 @@ public class Dash_Navi_Activity extends AppCompatActivity {
         //제일 처음 띄워줄 뷰 세티
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,swipeFragment).commitAllowingStateLoss();
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
 
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        DatabaseReference fcmToken = database.getReference(firebaseUser.getUid()).child("Token").child("token");
+                        fcmToken.setValue(token);
+                    }
+                });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
