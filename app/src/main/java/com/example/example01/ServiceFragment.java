@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +25,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServiceFragment extends Fragment {
 
@@ -36,13 +46,15 @@ public class ServiceFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressDialog progressDialog;
 
-    private List<PointValueData> list;
+    private ArrayList<Metric> list;
     private ArrayList<Entry> dataVals;
 
     LineChart lineChart;
     LineDataSet lineDataSet = new LineDataSet(null, null);
     ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     LineData lineData;
+
+    private ArrayList<String> metrics = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,25 +78,38 @@ public class ServiceFragment extends Fragment {
         list = new ArrayList<>();
         dataVals = new ArrayList<Entry>();
 
-        mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring");
-        mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
-        mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization");
-        mDatabase_Azure = firebaseDatabase.getReference(firebaseUser.getUid()).child("Azure").child("Monitoring").child("CPUUtilization");
+//        mDatabase = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring");
+//        mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
+//        mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization");
+//        mDatabase_Azure = firebaseDatabase.getReference(firebaseUser.getUid()).child("Azure").child("Monitoring").child("CPUUtilization");
+        mDatabase_Provider = firebaseDatabase.getReference(firebaseUser.getUid()).child(provider).child("Monitoring").child("CPUUtilization");
 
+       final ArrayList<String> vmlists = new ArrayList<>();
 
         //모니터링 recyclerview.......
-        ValueEventListener postListener = new ValueEventListener() {
+        mDatabase_Provider.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                ArrayList<Entry> dataVals = new ArrayList<Entry>();
-//                List<PointValueData> list = new ArrayList<>();
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    PointValueData data = snapshot.getValue(PointValueData.class);
-                    Log.d("ServiceFragment", "graph : " + data);
-                    list.add(data);
-//                    float time = Float.parseFloat(data.getTime());
-//                    float average = Float.parseFloat(data.getAverage());
-//                    dataVals.add(new Entry(time , average));
+                    final String vm_name = snapshot.getKey();
+                    mDatabase_Provider.child(vm_name).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot2) {
+                            HashMap<String, Float> time_metric = new LinkedHashMap<>(); // 데이터 순차 삽입을 위해 LinkedHashMap
+                            for (DataSnapshot monitoring_data : dataSnapshot2.getChildren()) {
+                                PointValueData pvd = monitoring_data.getValue(PointValueData.class);
+                                time_metric.put(pvd.getTime(), Float.valueOf(pvd.getAverage()));
+                            }
+                            Metric m = new Metric(vm_name, time_metric);
+                            list.add(m);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
                 setadapter(list);
             }
@@ -92,18 +117,11 @@ public class ServiceFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
-        };
-
-        mDatabase_AWS.child("aws_test01").addValueEventListener(postListener);
-        mDatabase_AWS.child("aws_test02").addValueEventListener(postListener);
-        mDatabase_AWS.child("aws_test03").addValueEventListener(postListener);
-        mDatabase_KT.child("JSM").addValueEventListener(postListener);
-        mDatabase_KT.child("example01").addValueEventListener(postListener);
-        mDatabase_Azure.child("azure-test").addValueEventListener(postListener);
+        });
 
         return rootview;
     }
-    public void setadapter(List<PointValueData> list) {
+    public void setadapter(ArrayList<Metric> list) {
         GraphAdapter graphadapter = new GraphAdapter(getContext(), list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(graphadapter);

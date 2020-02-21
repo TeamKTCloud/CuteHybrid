@@ -16,9 +16,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,24 +29,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jjoe64.graphview.LabelFormatter;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class GraphAdapter extends RecyclerView.Adapter {
 
-    private LineChart lineChart;
-    private LineDataSet lineDataSet = new LineDataSet(null, null);
     private ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
     private LineData lineData;
     private Context mContext;
     private ArrayList<Entry> dataVals;
-    private List<PointValueData> list;
+    private ArrayList<Metric> list;
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
     // 직전에 클릭됐던 Item의 position
     private int prePosition = -1;
 
-    public GraphAdapter(Context mContext, List list) {
+    public GraphAdapter(Context mContext, ArrayList list) {
         this.mContext = mContext;
         this.dataVals = dataVals;
         this.list = list;
@@ -66,6 +73,7 @@ public class GraphAdapter extends RecyclerView.Adapter {
         messageViewHolder.onBind(list.get(position), position);
 
 
+
         //레이아웃
 //        messageViewHolder.name.setText(vmlist.get(position).getName());
 
@@ -76,103 +84,68 @@ public class GraphAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,  View.OnCreateContextMenuListener {
+//    private class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,  View.OnCreateContextMenuListener {
+    private class MessageViewHolder extends RecyclerView.ViewHolder implements  View.OnCreateContextMenuListener {
         public ImageView imageView;
         public TextView name;
         public TextView cpu;
         public LineChart chart;
         private ConstraintLayout graphitem;
-
-        private Entry data1;
-        private PointValueData data2;
         private int position;
 
 
-        public MessageViewHolder(View view) {
+
+    public MessageViewHolder(View view) {
             super(view);
             imageView = view.findViewById(R.id.imageView);
             name = view.findViewById(R.id.name);
             cpu = view.findViewById(R.id.cpu);
-            chart = view.findViewById(R.id.chart);
+            chart = (LineChart) view.findViewById(R.id.chart);
             graphitem = view.findViewById(R.id.graphitem);
         }
 
 
-        void onBind(PointValueData data2, int position) {
-            this.data1 = data1;
-            this.data2 = data2;
+        void onBind(Metric vm_metric, int position) {
             this.position = position;
+            String vm_name = vm_metric.getVmName();
+            name.setText(vm_name);
 
-//            ArrayList<Entry> dataVals = new ArrayList<Entry>();
-//            float time = Float.parseFloat(data2.getTime());
-//            float average = Float.parseFloat(data2.getAverage());
-//            dataVals.add(new Entry(time , average));
+            Iterator<String> keySetIterator = vm_metric.getData().keySet().iterator();
 
+            String[] timeStrings = new String[vm_metric.getData().size()];
+            Float[] cpuMetrics = new Float[vm_metric.getData().size()];
 
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-
-            DatabaseReference mDatabase_KT = firebaseDatabase.getReference(firebaseUser.getUid()).child("KT").child("Monitoring").child("CPUUtilization");
-            DatabaseReference mDatabase_AWS = firebaseDatabase.getReference(firebaseUser.getUid()).child("AWS").child("Monitoring").child("CPUUtilization");
-            DatabaseReference mDatabase_Azure = firebaseDatabase.getReference(firebaseUser.getUid()).child("Azure").child("Monitoring").child("CPUUtilization");
-
-
-            ArrayList<Entry> dataVals = new ArrayList<Entry>();
-            ValueEventListener postListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    ArrayList<Entry> dataVals = new ArrayList<Entry>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        PointValueData data = snapshot.getValue(PointValueData.class);
-                        float time = Float.parseFloat(data.getTime());
-                        float average = Float.parseFloat(data.getAverage());
-                        dataVals.add(new Entry(time , average));
-                    }
-                    showChart(dataVals);
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            };
-
-            String str = data2.getProvider();
-            if (str.equals("AWS")) {
-                imageView.setImageResource(R.drawable.awslogo);
-                mDatabase_AWS.child("aws_test01").addValueEventListener(postListener);
-                mDatabase_AWS.child("aws_test02").addValueEventListener(postListener);
-                mDatabase_AWS.child("aws_test03").addValueEventListener(postListener);
-            }
-            if (str.equals("KT")) {
-                imageView.setImageResource(R.drawable.kt_cloud);
-                mDatabase_KT.child("JSM").addValueEventListener(postListener);
-                mDatabase_KT.child("example01").addValueEventListener(postListener);
-            }
-            if (str.equals("Azure")) {
-                imageView.setImageResource(R.drawable.azure2);
-                mDatabase_Azure.child("azure-test").addValueEventListener(postListener);
+            for(int i = 0; i < vm_metric.getData().size(); i++){
+                String key = keySetIterator.next();
+                timeStrings[i] = key;
+                cpuMetrics[i] = vm_metric.getData().get(key);
             }
 
-            name.setText(data2.getName());
-//            showChart(dataVals);
+            showChart(timeStrings, cpuMetrics);
+
             changeVisibility(selectedItems.get(position));
-            graphitem.setOnClickListener(this);
-            graphitem.setOnCreateContextMenuListener(this);
+//            graphitem.setOnClickListener(this);
+//            graphitem.setOnCreateContextMenuListener(this);
         }
 
-        private void showChart(ArrayList<Entry> dataVals) {
-            lineDataSet.setValues(dataVals);
+        private void showChart(String[] timeStrings, Float[] cpuMetrics) {
+
+            ArrayList<Entry> vm_cpu_data = new ArrayList<>();
+
+            for (int i = 0; i < cpuMetrics.length; i++) {
+                vm_cpu_data.add(new Entry(i, cpuMetrics[i]));
+            }
+
+            LineDataSet lineDataSet = new LineDataSet(vm_cpu_data, null);
             lineDataSet.setLabel("CPU Utilization(percent)");
-            iLineDataSets.clear();
-            iLineDataSets.add(lineDataSet);
-            lineData = new LineData(iLineDataSets);
-            chart.clear();
-            chart.setData(lineData);
+            LineData chartData = new LineData();
+            chartData.addDataSet(lineDataSet);
+            chart.setData(chartData);
+            chart.getXAxis().setValueFormatter(new LabelFormatter(timeStrings));
             chart.invalidate();
         }
 
         //list click해서 접고 펼치기
-        @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.graphitem:
@@ -247,5 +220,21 @@ public class GraphAdapter extends RecyclerView.Adapter {
                 return true;
             }
         };
+    }
+
+    public class LabelFormatter implements IAxisValueFormatter
+    {
+        private final String[] mLabels;
+
+        public LabelFormatter(String[] labels)
+        {
+            mLabels = labels;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis)
+        {
+            return mLabels[(int) value];
+        }
     }
 }
